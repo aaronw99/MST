@@ -1,24 +1,52 @@
-import java.util.Random;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        int[][] graph1 = completeGraphWeightGenerator(5, 10);
-        int[][] graph2 = completeGraphWeightGenerator(5, 10);
-        System.out.println("First graph");
-        for(int i = 0; i < graph1.length; i++){
-            for(int j = 0; j < graph1[0].length; j++){
-                System.out.print("|" + graph1[i][j] + "|");
+        int[][] graph1 = completeGraphWeightGenerator(50, 10);
+//        System.out.println("First graph");
+//        for(int i = 0; i < graph1.length; i++){
+//            for(int j = 0; j < graph1[0].length; j++){
+//                System.out.print("|" + graph1[i][j] + "|");
+//            }
+//            System.out.println();
+//        }
+        Set<Set<Edge>> uniqueMSTs = new HashSet<>();
+        for(int i = 0; i < 50; i++){
+            Set<Edge> mst = primsAlgorithm(graph1, i);
+            int value = 0;
+            for(Edge e: mst){
+                value += e.getWeight();
             }
-            System.out.println();
+            System.out.println(value);
+            uniqueMSTs.add(mst);
         }
-        System.out.println("Second graph");
-        for(int i = 0; i < graph2.length; i++){
-            for(int j = 0; j < graph2[0].length; j++){
-                System.out.print("|" + graph2[i][j] + "|");
+        System.out.println(uniqueMSTs.size());
+    }
+
+    public static Set<Edge> primsAlgorithm(int[][] graph, int startVertex){
+        Set<Edge> result = new HashSet<>();
+        Set<Integer> discoveredVertices = new HashSet<>();
+        int start = startVertex;
+        discoveredVertices.add(start);
+        while(discoveredVertices.size() < graph.length){
+            int[] curNeighbors = graph[start];
+            int min = Integer.MAX_VALUE;
+            int next = startVertex;
+            for(int j = 0; j < curNeighbors.length; j++){
+                if(j!= start && !discoveredVertices.contains(j)){
+                    if(curNeighbors[j] < min){
+                        min = curNeighbors[j];
+                        next = j;
+                    }
+                }
             }
-            System.out.println();
+            Edge taken = new Edge(start, next, min);
+            start = next;
+            discoveredVertices.add(next);
+            result.add(taken);
         }
+        return result;
     }
 
     /**
@@ -44,6 +72,18 @@ public class Main {
             for(int j = 0; j < i; j++){
                 result[i][j] = result[j][i];
             }
+        }
+        return result;
+    }
+
+    public static List<List<Integer>> adjacencyList(int[][] graph){
+        List<List<Integer>> result = new ArrayList<>();
+        for(int i = 0; i < graph.length; i++){
+            List<Integer> entry = new ArrayList<>();
+            for(int j : graph[i]){
+                entry.add(j);
+            }
+            result.add(entry);
         }
         return result;
     }

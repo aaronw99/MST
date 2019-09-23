@@ -4,31 +4,33 @@ public class Main {
 
     public static void main(String[] args) {
         int[][] graph1 = completeGraphWeightGenerator(5, 10);
-        System.out.println("First graph");
-        for(int i = 0; i < graph1.length; i++){
-            for(int j = 0; j < graph1[0].length; j++){
-                System.out.print("|" + graph1[i][j] + "|");
-            }
-            System.out.println();
-        }
-        Set<Set<Edge>> uniqueMSTs = new HashSet<>();
+        Set<List<Edge>> uniqueMSTs = new HashSet<>();
         for(int i = 0; i < 5; i++){
-            boolean exists = false;
-            Set<Edge> mst = primsAlgorithm(graph1, i);
-            for(Set<Edge> e : uniqueMSTs){
-                if(e.containsAll(mst)){
-                    exists = true;
-                }
+//            boolean exists = false;
+            List<Edge> mst = primsAlgorithm(graph1, i);
+            uniqueMSTs.add(mst);
+            int mstVal = 0;
+            for(Edge e : mst){
+                mstVal += e.getWeight();
             }
-            if(!exists){
-                uniqueMSTs.add(mst);
-            }
+            System.out.println("MST from "+i);
+            System.out.println("MST Value: " + mstVal);
+            System.out.println(mst);
+            System.out.println();
+//            for(List<Edge> e : uniqueMSTs){
+//                if(e.containsAll(mst)){
+//                    exists = true;
+//                }
+//            }
+//            if(!exists){
+//                uniqueMSTs.add(mst);
+//            }
         }
-        System.out.println(uniqueMSTs.size());
+        System.out.println("Unique MSTs: " + uniqueMSTs.size());
     }
 
-    private static Set<Edge> primsAlgorithm(int[][] graph, int startVertex){
-        Set<Edge> result = new HashSet<>();
+    private static List<Edge> primsAlgorithm(int[][] graph, int startVertex){
+        List<Edge> result = new ArrayList<>();
         Set<Integer> discoveredVertices = new HashSet<>();
         int start = startVertex;
         discoveredVertices.add(start);

@@ -3,19 +3,23 @@ import java.util.Objects;
 import java.util.Set;
 
 public class Edge {
-    private Set<Integer> vertices;
+//    private Set<Integer> vertices;
+    private int startNode;
+    private int endNode;
     private int weight;
 
     public Edge(int startNode, int endNode, int weight) {
-        vertices = new HashSet<>();
-        vertices.add(startNode);
-        vertices.add(endNode);
+//        vertices = new HashSet<>();
+//        vertices.add(startNode);
+//        vertices.add(endNode);
+        this.startNode=startNode;
+        this.endNode=endNode;
         this.weight = weight;
     }
 
     @Override
     public String toString() {
-        return "{ Vertices: " + vertices + "," + " Weight: " + weight + '}';
+        return "{ (" + startNode + "," + endNode + "), Weight: " + weight + '}';
     }
 
     public int getWeight(){
@@ -28,6 +32,7 @@ public class Edge {
         if (o == null || getClass() != o.getClass()) return false;
         Edge edge = (Edge) o;
         return weight == edge.weight &&
-                vertices.containsAll(edge.vertices);
+                startNode == edge.startNode &&
+                endNode == edge.endNode;
     }
 }

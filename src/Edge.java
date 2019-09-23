@@ -19,7 +19,7 @@ public class Edge {
 
     @Override
     public String toString() {
-        return "{ (" + startNode + "," + endNode + "), Weight: " + weight + '}';
+        return "{(" + startNode + "," + endNode + "), Weight: " + weight + '}';
     }
 
     public int getWeight(){

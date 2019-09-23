@@ -9,28 +9,30 @@ public class Main {
         System.out.println("Please provide the maximum weight for an edge");
         int maxWeight = scanner.nextInt();
         int[][] graph = completeGraphWeightGenerator(vertices, maxWeight);
-        Set<List<Edge>> uniqueMSTs = new HashSet<>();
+        int numEdges = ((vertices*vertices) - vertices) / 2;
+
         int minVal = Integer.MAX_VALUE;
-        int numEdges = 0;
-        for(int i = 0; i < vertices; i++){
-            List<Edge> mst = primsAlgorithm(graph, i);
+        Set<MST> uniqueMSTs = new HashSet<>();
+        for(int startingVertex = 0; startingVertex < vertices; startingVertex++){
+            MST mst = primsAlgorithm(graph, startingVertex);
             uniqueMSTs.add(mst);
-            int mstVal = 0;
-            for(Edge e : mst){
-                mstVal += e.getWeight();
-            }
+            int mstVal = mst.getVal();
             if(mstVal < minVal){
                 minVal = mstVal;
             }
+//            System.out.println("MST from " + startingVertex);
+//            System.out.println(mst);
+//            System.out.println("---------------------------------------------------------------");
         }
         System.out.println("Size of the graph: [Vertices: " + vertices + ", Edges: " + numEdges + "]");
         System.out.println("MST Value: " + minVal);
         System.out.println("Unique MSTs: " + uniqueMSTs.size());
     }
 
-    private static List<Edge> primsAlgorithm(int[][] graph, int startVertex){
-        List<Edge> result = new ArrayList<>();
+    private static MST primsAlgorithm(int[][] graph, int startVertex){
+        List<Edge> edgesTaken = new ArrayList<>();
         Set<Integer> discoveredVertices = new HashSet<>();
+        int val = 0;
         int start = startVertex;
         discoveredVertices.add(start);
         while(discoveredVertices.size() < graph.length){
@@ -45,12 +47,13 @@ public class Main {
                     }
                 }
             }
+            val += min;
             Edge taken = new Edge(start, next, min);
             start = next;
             discoveredVertices.add(next);
-            result.add(taken);
+            edgesTaken.add(taken);
         }
-        return result;
+        return new MST(edgesTaken, val);
     }
 
     /**
@@ -80,15 +83,15 @@ public class Main {
         return result;
     }
 
-    private static List<List<Integer>> adjacencyList(int[][] graph){
-        List<List<Integer>> result = new ArrayList<>();
-        for(int i = 0; i < graph.length; i++){
-            List<Integer> entry = new ArrayList<>();
-            for(int j : graph[i]){
-                entry.add(j);
-            }
-            result.add(entry);
-        }
-        return result;
-    }
+//    private static List<List<Integer>> adjacencyList(int[][] graph){
+//        List<List<Integer>> result = new ArrayList<>();
+//        for(int i = 0; i < graph.length; i++){
+//            List<Integer> entry = new ArrayList<>();
+//            for(int j : graph[i]){
+//                entry.add(j);
+//            }
+//            result.add(entry);
+//        }
+//        return result;
+//    }
 }

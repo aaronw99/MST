@@ -24,9 +24,18 @@ public class Main {
 //            System.out.println(mst);
 //            System.out.println("---------------------------------------------------------------");
         }
+        System.out.println();
         System.out.println("Size of the graph: [Vertices: " + vertices + ", Edges: " + numEdges + "]");
-        System.out.println("MST Value: " + minVal);
-        System.out.println("Unique MSTs: " + uniqueMSTs.size());
+        System.out.println("Lowest MST value: " + minVal);
+        System.out.println("Unique MSTs created: " + uniqueMSTs.size());
+
+        System.out.println();
+//        boolean wantsAdjacencyList = false;
+        System.out.println("Would you like to see the adjacency list of the graph? (Y/N)");
+        System.out.println();
+        adjacencyList(graph);
+//        wantsAdjacencyList = scanner.nextBoolean();
+//        boolean wantsEdgeList = false;
     }
 
     private static MST primsAlgorithm(int[][] graph, int startVertex){
@@ -83,15 +92,16 @@ public class Main {
         return result;
     }
 
-//    private static List<List<Integer>> adjacencyList(int[][] graph){
-//        List<List<Integer>> result = new ArrayList<>();
-//        for(int i = 0; i < graph.length; i++){
-//            List<Integer> entry = new ArrayList<>();
-//            for(int j : graph[i]){
-//                entry.add(j);
-//            }
-//            result.add(entry);
-//        }
-//        return result;
-//    }
+    private static void adjacencyList(int[][] graph){
+        System.out.println("[vertex]: (neighbors)");
+        for(int i = 0; i < graph.length; i++){
+            StringBuilder row = new StringBuilder("[" + i + "]: ");
+            for(int j = 0; j < graph[i].length; j++){
+                if(j != i){
+                    row.append("(").append(j).append(")");
+                }
+            }
+            System.out.println(row.toString());
+        }
+    }
 }

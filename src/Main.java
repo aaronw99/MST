@@ -3,29 +3,28 @@ import java.util.*;
 public class Main {
 
     public static void main(String[] args) {
-        int[][] graph1 = completeGraphWeightGenerator(5, 10);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please provide how many vertices you would like to create a complete graph from.");
+        int vertices = scanner.nextInt();
+        System.out.println("Please provide the maximum weight for an edge");
+        int maxWeight = scanner.nextInt();
+        int[][] graph = completeGraphWeightGenerator(vertices, maxWeight);
         Set<List<Edge>> uniqueMSTs = new HashSet<>();
-        for(int i = 0; i < 5; i++){
-//            boolean exists = false;
-            List<Edge> mst = primsAlgorithm(graph1, i);
+        int minVal = Integer.MAX_VALUE;
+        int numEdges = 0;
+        for(int i = 0; i < vertices; i++){
+            List<Edge> mst = primsAlgorithm(graph, i);
             uniqueMSTs.add(mst);
             int mstVal = 0;
             for(Edge e : mst){
                 mstVal += e.getWeight();
             }
-            System.out.println("MST from "+i);
-            System.out.println("MST Value: " + mstVal);
-            System.out.println(mst);
-            System.out.println();
-//            for(List<Edge> e : uniqueMSTs){
-//                if(e.containsAll(mst)){
-//                    exists = true;
-//                }
-//            }
-//            if(!exists){
-//                uniqueMSTs.add(mst);
-//            }
+            if(mstVal < minVal){
+                minVal = mstVal;
+            }
         }
+        System.out.println("Size of the graph: [Vertices: " + vertices + ", Edges: " + numEdges + "]");
+        System.out.println("MST Value: " + minVal);
         System.out.println("Unique MSTs: " + uniqueMSTs.size());
     }
 

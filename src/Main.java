@@ -30,12 +30,19 @@ public class Main {
         System.out.println("Unique MSTs created: " + uniqueMSTs.size());
         System.out.println();
 
-//        boolean wantsAdjacencyList = false;
         System.out.println("Would you like to see the adjacency list of the graph? (Y/N)");
+        boolean wantsAdjacencyList = getYesNo(scanner).equals("Y");
         System.out.println();
-        adjacencyList(graph);
-//        wantsAdjacencyList = scanner.nextBoolean();
-//        boolean wantsEdgeList = false;
+        if(wantsAdjacencyList){
+            adjacencyList(graph);
+        }
+        System.out.println();
+
+        System.out.println("Would you like to see the edge list of the MST created from the first vertex?");
+        boolean wantsEdgeList = getYesNo(scanner).equals("Y");
+        if(wantsEdgeList){
+            System.out.println("edge list");
+        }
     }
 
     private static MST primsAlgorithm(int[][] graph, int startVertex){
@@ -113,6 +120,18 @@ public class Main {
             }catch(Exception e){
                 System.out.println("Please try again with an integer value");
                 result = 0;
+            }
+        }
+        return result;
+    }
+
+    private static String getYesNo(Scanner scanner){
+        String result = "";
+        while(result.equals("")){
+            result = scanner.next().toUpperCase();
+            if(!result.equals("Y") && !result.equals("N")) {
+                System.out.println("Please provide Y or N");
+                result = "";
             }
         }
         return result;

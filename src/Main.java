@@ -38,10 +38,12 @@ public class Main {
         }
         System.out.println();
 
-        System.out.println("Would you like to see the edge list of the MST created from the first vertex?");
+        System.out.println("Would you like to see the edge list of the MST created from the first vertex? (Y/N)");
         boolean wantsEdgeList = getYesNo(scanner).equals("Y");
         if(wantsEdgeList){
-            System.out.println("edge list");
+            MST mstFrom0 = primsAlgorithm(graph, 0);
+            List<Edge> edgeList = mstFrom0.getEdgeList();
+            System.out.println(edgeList);
         }
     }
 

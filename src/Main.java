@@ -17,7 +17,6 @@ public class Main {
         Set<MST> uniqueMSTs = new HashSet<>();
         for(int startingVertex = 0; startingVertex < vertices; startingVertex++){
             MST mst = primsAlgorithm(graph, startingVertex);
-            System.out.println(mst);
             uniqueMSTs.add(mst);
             int mstVal = mst.getVal();
             if(mstVal < minVal){

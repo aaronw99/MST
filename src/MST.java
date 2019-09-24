@@ -36,6 +36,7 @@ public class MST {
 
     @Override
     public int hashCode() {
-        return Objects.hash(edges, val);
+        Set<Edge> edgeSet = new HashSet<>(edges);
+        return Objects.hash(edgeSet, val);
     }
 }

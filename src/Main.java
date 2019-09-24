@@ -42,7 +42,7 @@ public class Main {
         boolean wantsEdgeList = getYesNo(scanner).equals("Y");
         if(wantsEdgeList){
             MST mstFrom0 = primsAlgorithm(graph, 0);
-            Set<Edge> edges = mstFrom0.getEdges();
+            List<Edge> edges = mstFrom0.getEdges();
             int mstVal = 0;
             for(Edge e: edges){
                 mstVal += e.getWeight();
@@ -53,7 +53,7 @@ public class Main {
     }
 
     private static MST primsAlgorithm(int[][] graph, int startVertex){
-        Set<Edge> edgesTaken = new HashSet<>();
+        List<Edge> edgesTaken = new ArrayList<>();
         Set<Integer> discoveredVertices = new HashSet<>();
         int val = 0;
         int start = startVertex;

@@ -43,7 +43,12 @@ public class Main {
         if(wantsEdgeList){
             MST mstFrom0 = primsAlgorithm(graph, 0);
             List<Edge> edgeList = mstFrom0.getEdgeList();
+            int mstVal = 0;
+            for(Edge e: edgeList){
+                mstVal += e.getWeight();
+            }
             System.out.println(edgeList);
+            System.out.println("MST Value: " + mstVal);
         }
     }
 

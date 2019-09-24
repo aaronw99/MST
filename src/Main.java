@@ -17,6 +17,7 @@ public class Main {
         Set<MST> uniqueMSTs = new HashSet<>();
         for(int startingVertex = 0; startingVertex < vertices; startingVertex++){
             MST mst = primsAlgorithm(graph, startingVertex);
+            System.out.println(mst);
             uniqueMSTs.add(mst);
             int mstVal = mst.getVal();
             if(mstVal < minVal){
@@ -35,25 +36,25 @@ public class Main {
         System.out.println();
         if(wantsAdjacencyList){
             adjacencyList(graph);
+            System.out.println();
         }
-        System.out.println();
 
         System.out.println("Would you like to see the edge list of the MST created from the first vertex? (Y/N)");
         boolean wantsEdgeList = getYesNo(scanner).equals("Y");
         if(wantsEdgeList){
             MST mstFrom0 = primsAlgorithm(graph, 0);
-            List<Edge> edgeList = mstFrom0.getEdgeList();
+            Set<Edge> edges = mstFrom0.getEdges();
             int mstVal = 0;
-            for(Edge e: edgeList){
+            for(Edge e: edges){
                 mstVal += e.getWeight();
             }
-            System.out.println(edgeList);
+            System.out.println(edges.toString());
             System.out.println("MST Value: " + mstVal);
         }
     }
 
     private static MST primsAlgorithm(int[][] graph, int startVertex){
-        List<Edge> edgesTaken = new ArrayList<>();
+        Set<Edge> edgesTaken = new HashSet<>();
         Set<Integer> discoveredVertices = new HashSet<>();
         int val = 0;
         int start = startVertex;

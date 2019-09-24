@@ -5,9 +5,11 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please provide how many vertices you would like to create a complete graph from.");
-        int vertices = scanner.nextInt();
+        int vertices = getValidInt(scanner);
+
         System.out.println("Please provide the maximum weight for an edge");
-        int maxWeight = scanner.nextInt();
+        int maxWeight = getValidInt(scanner);
+
         int[][] graph = completeGraphWeightGenerator(vertices, maxWeight);
         int numEdges = ((vertices*vertices) - vertices) / 2;
 
@@ -20,16 +22,14 @@ public class Main {
             if(mstVal < minVal){
                 minVal = mstVal;
             }
-//            System.out.println("MST from " + startingVertex);
-//            System.out.println(mst);
-//            System.out.println("---------------------------------------------------------------");
         }
+
         System.out.println();
         System.out.println("Size of the graph: [Vertices: " + vertices + ", Edges: " + numEdges + "]");
         System.out.println("Lowest MST value: " + minVal);
         System.out.println("Unique MSTs created: " + uniqueMSTs.size());
-
         System.out.println();
+
 //        boolean wantsAdjacencyList = false;
         System.out.println("Would you like to see the adjacency list of the graph? (Y/N)");
         System.out.println();
@@ -103,5 +103,18 @@ public class Main {
             }
             System.out.println(row.toString());
         }
+    }
+
+    private static int getValidInt(Scanner scanner){
+        int result = 0;
+        while(result == 0){
+            try{
+                result = Integer.parseInt(scanner.next());
+            }catch(Exception e){
+                System.out.println("Please try again with an integer value");
+                result = 0;
+            }
+        }
+        return result;
     }
 }

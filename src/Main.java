@@ -20,7 +20,6 @@ public class Main {
         }
         MST mstFrom0 = primsAlgorithm(graph, 0);
 
-
         System.out.println();
         System.out.println("Size of the graph: [Vertices: " + vertices + ", Edges: " + numEdges + "]");
         System.out.println("MST value: " + mstFrom0.getVal());
@@ -67,6 +66,7 @@ public class Main {
                 edgesAvailable.remove(minEdge);
             }
             minEdge = Collections.min(edgesAvailable);
+            // makes sure there are no cycles
             while(edgesTaken.contains(minEdge)){
                 edgesAvailable.remove(minEdge);
                 minEdge = Collections.min(edgesAvailable);

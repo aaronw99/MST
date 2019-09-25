@@ -13,20 +13,17 @@ public class Main {
         int[][] graph = completeGraphWeightGenerator(vertices, maxWeight);
         int numEdges = ((vertices*vertices) - vertices) / 2;
 
-        int minVal = Integer.MAX_VALUE;
         Set<MST> uniqueMSTs = new HashSet<>();
         for(int startingVertex = 0; startingVertex < vertices; startingVertex++){
             MST mst = primsAlgorithm(graph, startingVertex);
             uniqueMSTs.add(mst);
-            int mstVal = mst.getVal();
-            if(mstVal < minVal){
-                minVal = mstVal;
-            }
         }
+        MST mstFrom0 = primsAlgorithm(graph, 0);
+
 
         System.out.println();
         System.out.println("Size of the graph: [Vertices: " + vertices + ", Edges: " + numEdges + "]");
-        System.out.println("Lowest MST value: " + minVal);
+        System.out.println("MST value: " + mstFrom0.getVal());
         System.out.println("Unique MSTs created: " + uniqueMSTs.size());
         System.out.println();
 
@@ -41,8 +38,7 @@ public class Main {
         System.out.println("Would you like to see the edge list of the MST created from the first vertex? (Y/N)");
         boolean wantsEdgeList = getYesNo(scanner).equals("Y");
         if(wantsEdgeList){
-            MST mstFrom0 = primsAlgorithm(graph, 0);
-            List<Edge> edges = mstFrom0.getEdges();
+            Set<Edge> edges = mstFrom0.getEdges();
             int mstVal = 0;
             for(Edge e: edges){
                 mstVal += e.getWeight();
@@ -53,36 +49,33 @@ public class Main {
     }
 
     private static MST primsAlgorithm(int[][] graph, int startVertex){
-        List<Edge> edgesTaken = new ArrayList<>();
-        Set<Edge> edgesAvailable = new HashSet<>();
-        Edge edgeRecentlyTaken = null;
+        Set<Edge> edgesTaken = new HashSet<>();
         Set<Integer> discoveredVertices = new HashSet<>();
+        Set<Edge> edgesAvailable = new HashSet<>();
+        Edge minEdge = null;
         int i = startVertex;
         discoveredVertices.add(i);
         while(discoveredVertices.size() < graph.length){
             int[] neighbors = graph[i];
-            for(int j=0; j < neighbors.length; j++){
+            for(int j = 0; j < neighbors.length; j++){
                 if(j != i){
-                    Edge newAvailable = new Edge(i, j, neighbors[j]);
-                    edgesAvailable.add(newAvailable);
+                    Edge addition = new Edge(i,j,neighbors[j]);
+                    edgesAvailable.add(addition);
                 }
             }
-            if(edgeRecentlyTaken != null){
-                edgesAvailable.remove(edgeRecentlyTaken);
-                edgeRecentlyTaken = null;
+            if(minEdge != null){
+                edgesAvailable.remove(minEdge);
             }
-            int lightestWeight = Integer.MAX_VALUE;
-            for(Edge e: edgesAvailable){
-                if(e.getWeight() < lightestWeight){
-                    lightestWeight = e.getWeight();
-                    edgeRecentlyTaken = e;
+            minEdge = Collections.min(edgesAvailable);
+            Set<Integer> minEdgeVertices = minEdge.getVertices();
+            for(int v : minEdgeVertices){
+                if(!discoveredVertices.contains(v)){
+                    i = v;
+                    break;
                 }
             }
-            if(edgeRecentlyTaken != null){
-                edgesTaken.add(edgeRecentlyTaken);
-                i = edgeRecentlyTaken.getEndNode();
-                discoveredVertices.add(i);
-            }
+            discoveredVertices.add(i);
+            edgesTaken.add(minEdge);
         }
         int val = 0;
         for(Edge e: edgesTaken){

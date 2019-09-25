@@ -2,18 +2,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Edge {
+public class Edge implements Comparable<Edge>{
     private Set<Integer> vertices;
-    private int startNode;
-    private int endNode;
     private int weight;
 
     public Edge(int startNode, int endNode, int weight) {
         vertices = new HashSet<>();
         vertices.add(startNode);
         vertices.add(endNode);
-        this.startNode = startNode;
-        this.endNode = endNode;
         this.weight = weight;
     }
 
@@ -22,16 +18,12 @@ public class Edge {
         return "{Vertices: " + vertices.toString() + ", Weight: " + weight + '}';
     }
 
-    public int getWeight(){
+    public int getWeight() {
         return weight;
     }
 
-    public int getStartNode() {
-        return startNode;
-    }
-
-    public int getEndNode() {
-        return endNode;
+    public Set<Integer> getVertices() {
+        return vertices;
     }
 
     @Override
@@ -46,5 +38,10 @@ public class Edge {
     @Override
     public int hashCode() {
         return Objects.hash(vertices, weight);
+    }
+
+    @Override
+    public int compareTo(Edge o) {
+        return Integer.compare(weight, o.getWeight());
     }
 }

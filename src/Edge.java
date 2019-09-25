@@ -4,12 +4,16 @@ import java.util.Set;
 
 public class Edge {
     private Set<Integer> vertices;
+    private int startNode;
+    private int endNode;
     private int weight;
 
     public Edge(int startNode, int endNode, int weight) {
         vertices = new HashSet<>();
         vertices.add(startNode);
         vertices.add(endNode);
+        this.startNode = startNode;
+        this.endNode = endNode;
         this.weight = weight;
     }
 
@@ -20,6 +24,14 @@ public class Edge {
 
     public int getWeight(){
         return weight;
+    }
+
+    public int getStartNode() {
+        return startNode;
+    }
+
+    public int getEndNode() {
+        return endNode;
     }
 
     @Override

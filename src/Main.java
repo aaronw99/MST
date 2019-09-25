@@ -54,27 +54,39 @@ public class Main {
 
     private static MST primsAlgorithm(int[][] graph, int startVertex){
         List<Edge> edgesTaken = new ArrayList<>();
+        Set<Edge> edgesAvailable = new HashSet<>();
+        Edge edgeRecentlyTaken = null;
         Set<Integer> discoveredVertices = new HashSet<>();
-        int val = 0;
-        int start = startVertex;
-        discoveredVertices.add(start);
+        int i = startVertex;
+        discoveredVertices.add(i);
         while(discoveredVertices.size() < graph.length){
-            int[] curNeighbors = graph[start];
-            int min = Integer.MAX_VALUE;
-            int next = startVertex;
-            for(int j = 0; j < curNeighbors.length; j++){
-                if(j!= start && !discoveredVertices.contains(j)){
-                    if(curNeighbors[j] < min){
-                        min = curNeighbors[j];
-                        next = j;
-                    }
+            int[] neighbors = graph[i];
+            for(int j=0; j < neighbors.length; j++){
+                if(j != i){
+                    Edge newAvailable = new Edge(i, j, neighbors[j]);
+                    edgesAvailable.add(newAvailable);
                 }
             }
-            val += min;
-            Edge taken = new Edge(start, next, min);
-            start = next;
-            discoveredVertices.add(next);
-            edgesTaken.add(taken);
+            if(edgeRecentlyTaken != null){
+                edgesAvailable.remove(edgeRecentlyTaken);
+                edgeRecentlyTaken = null;
+            }
+            int lightestWeight = Integer.MAX_VALUE;
+            for(Edge e: edgesAvailable){
+                if(e.getWeight() < lightestWeight){
+                    lightestWeight = e.getWeight();
+                    edgeRecentlyTaken = e;
+                }
+            }
+            if(edgeRecentlyTaken != null){
+                edgesTaken.add(edgeRecentlyTaken);
+                i = edgeRecentlyTaken.getEndNode();
+                discoveredVertices.add(i);
+            }
+        }
+        int val = 0;
+        for(Edge e: edgesTaken){
+            val += e.getWeight();
         }
         return new MST(edgesTaken, val);
     }

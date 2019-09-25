@@ -67,7 +67,7 @@ public class Main {
             }
             minEdge = Collections.min(edgesAvailable);
             // makes sure there are no cycles
-            while(edgesTaken.contains(minEdge)){
+            while(discoveredVertices.containsAll(minEdge.getVertices())){
                 edgesAvailable.remove(minEdge);
                 minEdge = Collections.min(edgesAvailable);
             }

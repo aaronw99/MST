@@ -38,12 +38,8 @@ public class Main {
         boolean wantsEdgeList = getYesNo(scanner).equals("Y");
         if(wantsEdgeList){
             List<Edge> edges = mstFrom0.getEdges();
-            int mstVal = 0;
-            for(Edge e: edges){
-                mstVal += e.getWeight();
-            }
             System.out.println(edges.toString());
-            System.out.println("MST Value: " + mstVal);
+            System.out.println("MST Value: " + mstFrom0.getVal());
         }
         scanner.close();
     }

@@ -37,7 +37,7 @@ public class Main {
         System.out.println("Would you like to see the edge list of the MST created from the first vertex? (Y/N)");
         boolean wantsEdgeList = getYesNo(scanner).equals("Y");
         if(wantsEdgeList){
-            Set<Edge> edges = mstFrom0.getEdges();
+            List<Edge> edges = mstFrom0.getEdges();
             System.out.println(edges.toString());
             System.out.println("MST Value: " + mstFrom0.getVal());
         }
@@ -45,7 +45,7 @@ public class Main {
     }
 
     private static MST primsAlgorithm(int[][] graph, int startVertex){
-        Set<Edge> edgesTaken = new HashSet<>();
+        List<Edge> edgesTaken = new ArrayList<>();
         Set<Integer> discoveredVertices = new HashSet<>();
         Set<Edge> edgesAvailable = new HashSet<>();
         Edge minEdge = null;

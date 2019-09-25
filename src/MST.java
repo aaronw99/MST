@@ -1,15 +1,15 @@
 import java.util.*;
 
 public class MST {
-    private Set<Edge> edges;
+    private List<Edge> edges;
     private int val;
 
-    public MST(Set<Edge> edges, int val) {
-        this.edges = new HashSet<>(edges);
+    public MST(List<Edge> edges, int val) {
+        this.edges = new ArrayList<>(edges);
         this.val = val;
     }
 
-    public Set<Edge> getEdges() {
+    public List<Edge> getEdges() {
         return edges;
     }
 
@@ -36,6 +36,7 @@ public class MST {
 
     @Override
     public int hashCode() {
-        return Objects.hash(edges, val);
+        Set<Edge> edgeSet = new HashSet<>(edges);
+        return Objects.hash(edgeSet, val);
     }
 }

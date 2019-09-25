@@ -45,6 +45,7 @@ public class Main {
             System.out.println(edges.toString());
             System.out.println("MST Value: " + mstVal);
         }
+        scanner.close();
     }
 
     private static MST primsAlgorithm(int[][] graph, int startVertex){
